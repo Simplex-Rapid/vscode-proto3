@@ -6,6 +6,13 @@ Protobuf 3 support for Visual Studio Code
 
 https://github.com/zxh0/vscode-proto3
 
+## Installation guide
+
+Download the latest build and install from terminal as the example:
+```
+code --install-extension vscode-proto3-0.5.5+1.vsix
+```
+
 ### VSCode Commands
 
 _By default **ctrl-shift-p** opens the command prompt._
