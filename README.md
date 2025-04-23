@@ -2,9 +2,7 @@
 
 ![icon](images/vscode_extension_icon.png)
 
-Protobuf 3 support for Visual Studio Code
-
-https://github.com/zxh0/vscode-proto3
+Protobuf 3 and Protobuf 3b support for Visual Studio Code
 
 ## Installation guide
 
@@ -12,6 +10,10 @@ Download the latest build and install from terminal as the example:
 ```
 code --install-extension vscode-proto3-0.5.5+1.vsix
 ```
+### On MacOS
+
+1. Install clang-format on your system: `brew install clang-format`
+2. Install the `clang-format` plugin in VSCode
 
 ### VSCode Commands
 
@@ -32,7 +34,8 @@ _By default **ctrl-shift-p** opens the command prompt._
 - code formatting.
 - brace matching.
 - line and block commenting.
-- compilation.
+- compilation
+- mixins support
 
 ![gif1](images/gif1.gif)
 
@@ -162,10 +165,7 @@ Auto-completion not works in some situations.
 
 Some users consistently see an error like `spawnsync clang-format enoent` when they save. This happens when the "formatOnSave"-setting is enabled in VSCode and "clang-format" cannot be found. To fix this:
 
-### On MacOS
 
-1. Install clang-format on your system: `brew install clang-format`
-2. Install the `clang-format` plugin in VSCode
 
 ## Release Notes
 
