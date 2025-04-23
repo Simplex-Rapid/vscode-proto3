@@ -70,7 +70,7 @@ export class Proto3Compiler {
 
         // ⬇️ Preprocess .proto3b files
         args = args.map(arg => {
-            if (arg.endsWith(".proto3b")) {
+            if (arg.endsWith(".proto")) {
                 console.log(`[proto3b] Transforming ${arg} to proto3`);
                 const originalPath = arg;
                 const fullPath = path.isAbsolute(originalPath)
@@ -88,7 +88,7 @@ export class Proto3Compiler {
 
                 
 
-                const tmpPath = fullPath.replace(/\.proto3b$/, ".build.proto");
+                const tmpPath = fullPath.replace(/\.proto$/, ".build.proto");
                 // calculate relative path for the file in the .gen folder
                 const relativePath = path.relative(workspaceRoot, tmpPath);
                 console.log(`[proto3b] Relative path: ${relativePath}`);
