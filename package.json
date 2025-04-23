@@ -2,7 +2,7 @@
   "name": "vscode-proto3",
   "displayName": "vscode-proto3",
   "description": "Protobuf 3 and 3b support for Visual Studio Code",
-  "version": "0.5.5+2",
+  "version": "0.5.5+3",
   "publisher": "zxh404",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/vscode_extension_icon.png",
@@ -37,7 +37,8 @@
       {
         "id": "proto3",
         "extensions": [
-          ".proto", ".proto3b"
+          ".proto",
+          ".proto3b"
         ],
         "aliases": [
           "Protocol Buffers"
@@ -102,7 +103,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^2.2.32",
-    "@types/node": "^6.14.9",
+    "@types/node": "^11.3.0",
     "@types/vscode": "^1.50.0",
     "husky": "^7.0.1",
     "mocha": "^6.2.2",
@@ -111,7 +112,9 @@
   },
   "dependencies": {
     "fast-glob": "^3.2.7",
-    "npm": "^6.14.6",
+    "fs-extra": "^11.3.0",
+    "install": "^0.13.0",
+    "npm": "^11.3.0",
     "protobufjs": "^6.11.3"
   }
 }

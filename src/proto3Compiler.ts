@@ -28,7 +28,6 @@ export class Proto3Compiler {
         // Compile in batch produces errors. Must be 1 by 1.
         this._config.getAllProtoPaths().forEach(proto => {
             this.runProtoc(args.concat(proto), undefined, (stdout, stderr) => {
-
                 vscode.window.showErrorMessage(stderr);
             });
         })
@@ -71,7 +70,8 @@ export class Proto3Compiler {
         // ⬇️ Preprocess .proto3b files
         args = args.map(arg => {
             if (arg.endsWith(".proto")) {
-                console.log(`[proto3b] Transforming ${arg} to proto3`);
+                try {
+                    console.log(`[proto3b] Transforming ${arg} to proto3`);
                 const originalPath = arg;
                 const fullPath = path.isAbsolute(originalPath)
                     ? originalPath
@@ -97,7 +97,7 @@ export class Proto3Compiler {
                 const generalGenDir = path.join(vscode.workspace.rootPath ?? ".", ".gen");
                 
                 if (!fs.existsSync(generalGenDir)) {
-                    fs.mkdirSync(generalGenDir);
+                    fs.mkdirSync(generalGenDir, { recursive: true });
                 }
 
                 const genDir = path.join(generalGenDir, path.dirname(relativePath));
@@ -107,7 +107,7 @@ export class Proto3Compiler {
                 console.log(`[proto3b] Generated path: ${genPath}`);
                 
                 if (!fs.existsSync(genDir)) {
-                    fs.mkdirSync(genDir);
+                    fs.mkdirSync(genDir, {recursive: true});
                 }
                 
                 const protoText = fs.readFileSync(fullPath, "utf8");
@@ -118,6 +118,11 @@ export class Proto3Compiler {
                 lineMapsByFile[genPath] = lineMap;
 
                 return path.relative(workspaceRoot, genPath);
+                } catch (e) {
+                    console.error("Error transforming proto3b to proto3:", e);
+                    vscode.window.showErrorMessage("Error transforming proto3b to proto3: " + e.message);
+                }
+                
             }
             return arg;
         });
@@ -219,9 +224,9 @@ function transformProto3bToProto3(content: string, relativePath: string): Transf
             console.log(`[proto3b] Found message ${msgName} extending ${baseName}`);
 
             // Aggiungi l'import solo una volta
-            if (!addedImport && !content.includes('import ".gen/protos/ts_proto_options.proto";')) {
+            if (!addedImport && !content.includes('import ".gen/utils/ts_proto_options.proto";')) {
                 
-                outputLines.push('import ".gen/protos/ts_proto_options.proto";');
+                outputLines.push('import ".gen/utils/ts_proto_options.proto";');
                 outputLines.push('');
                 lineMap.push(i); // riferimento alla riga dell'estensione
                 addedImport = true;
@@ -259,7 +264,7 @@ function transformProto3bToProto3(content: string, relativePath: string): Transf
 function ensureTsProtoOptionsExists(): void {
     try {
         const workspaceRoot = vscode.workspace.rootPath ?? ".";
-        const protoPath = path.join(workspaceRoot, ".gen", "protos", "ts_proto_options.proto");
+        const protoPath = path.join(workspaceRoot, ".gen", "utils", "ts_proto_options.proto");
 
         console.log(`[proto3b] Checking for ts_proto_options.proto at ${protoPath}`);
 
@@ -269,13 +274,13 @@ function ensureTsProtoOptionsExists(): void {
 
             const contents = `syntax = "proto3";
   
-  import "google/protobuf/descriptor.proto";
-  
-  package ts_proto_options;
-  
-  extend google.protobuf.MessageOptions {
-    string mixins = 50001;
-  }
+import "google/protobuf/descriptor.proto";
+
+package ts_proto_options;
+
+extend google.protobuf.MessageOptions {
+string mixins = 50001;
+}
   `;
             fs.writeFileSync(protoPath, contents, "utf8");
             console.log(`[proto3b] Created missing ts_proto_options.proto`);
