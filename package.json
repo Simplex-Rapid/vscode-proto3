@@ -1,7 +1,7 @@
 {
   "name": "vscode-proto3",
   "displayName": "vscode-proto3",
-  "description": "Protobuf 3 support for Visual Studio Code",
+  "description": "Protobuf 3 and 3b support for Visual Studio Code",
   "version": "0.5.5",
   "publisher": "zxh404",
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -19,9 +19,7 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onLanguage:proto3",
-    "onCommand:proto3.compile.one",
-    "onCommand:proto3.compile.all"
+    "onLanguage:proto3"
   ],
   "main": "./out/src/proto3Main",
   "contributes": {
@@ -39,7 +37,7 @@
       {
         "id": "proto3",
         "extensions": [
-          ".proto"
+          ".proto", ".proto3b"
         ],
         "aliases": [
           "Protocol Buffers"

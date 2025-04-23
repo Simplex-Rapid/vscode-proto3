@@ -10,6 +10,11 @@
       "description": "proto2 syntax",
       "body": "syntax = \"proto2\";"
     },
+    "syntax proto3-b": {
+      "prefix": "sp3-b",
+      "description": "proto3-b syntax",
+      "body": "syntax = \"proto3-b\";"
+    },
     "package": {
       "prefix": "pkg",
       "description": "package specifier",
@@ -74,6 +79,11 @@
       "prefix": "oaa",
       "description": "option allow_alias",
       "body": "option allow_alias = true;"
+    },
+    "message with extends": {
+      "prefix": "msg_ext",
+      "body": "message ${1:ChildMessageName} extends ${2:ParentMessageName} {\n\t$0\n}",
+      "description": "Create a message that extends another"
     },
     "message": {
       "prefix": "msg",

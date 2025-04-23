@@ -76,7 +76,7 @@ class ProtoFinder {
         let search = function(dir: string): string[] {
             let files = fs.readdirSync(dir);
 
-            let protos = files.filter(file => file.endsWith('.proto'))
+            let protos = files.filter(file => file.endsWith('.proto') || file.endsWith('.proto3b'))
                           .map(file => path.join(path.relative(root, dir), file));
 
             files.map(file => path.join(dir, file))
