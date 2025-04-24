@@ -27,10 +27,10 @@ export function activate(ctx: vscode.ExtensionContext): void {
         if (event.languageId == 'proto3') {
             const workspaceFolder = vscode.workspace.getWorkspaceFolder(event.uri);
             const compiler = new Proto3Compiler(workspaceFolder);
-            diagnosticProvider.createDiagnostics(event, compiler);
-            if (Proto3Configuration.Instance(workspaceFolder).compileOnSave()) {
-                compiler.compileActiveProto();
-            }
+            // diagnosticProvider.createDiagnostics(event, compiler);
+            // if (Proto3Configuration.Instance(workspaceFolder).compileOnSave()) {
+            //     // compiler.compileActiveProto();
+            // }
         }
     });
 

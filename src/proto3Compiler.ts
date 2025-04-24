@@ -69,61 +69,61 @@ export class Proto3Compiler {
 
         // ⬇️ Preprocess .proto3b files
         args = args.map(arg => {
-            if (arg.endsWith(".proto")) {
-                try {
-                    console.log(`[proto3b] Transforming ${arg} to proto3`);
-                const originalPath = arg;
-                const fullPath = path.isAbsolute(originalPath)
-                    ? originalPath
-                    : path.join(vscode.workspace.rootPath ?? "", originalPath);
+            // if (arg.endsWith(".proto")) {
+            //     try {
+            //         console.log(`[proto3b] Transforming ${arg} to proto3`);
+            //     const originalPath = arg;
+            //     const fullPath = path.isAbsolute(originalPath)
+            //         ? originalPath
+            //         : path.join(vscode.workspace.rootPath ?? "", originalPath);
 
-                const workspaceRoot = vscode.workspace.rootPath ?? ".";
+            //     const workspaceRoot = vscode.workspace.rootPath ?? ".";
 
-                console.log(`[proto3b] Full path: ${fullPath}`);
+            //     console.log(`[proto3b] Full path: ${fullPath}`);
 
-                if (!fs.existsSync(fullPath)) {
-                    vscode.window.showErrorMessage(`File not found: ${fullPath}`);
-                    return;
-                }
+            //     if (!fs.existsSync(fullPath)) {
+            //         vscode.window.showErrorMessage(`File not found: ${fullPath}`);
+            //         return;
+            //     }
 
                 
 
-                const tmpPath = fullPath.replace(/\.proto$/, ".build.proto");
-                // calculate relative path for the file in the .gen folder
-                const relativePath = path.relative(workspaceRoot, tmpPath);
-                console.log(`[proto3b] Relative path: ${relativePath}`);
+            //     const tmpPath = fullPath.replace(/\.proto$/, ".build.proto");
+            //     // calculate relative path for the file in the .gen folder
+            //     const relativePath = path.relative(workspaceRoot, tmpPath);
+            //     console.log(`[proto3b] Relative path: ${relativePath}`);
 
-                // TODO: Reproduce the path to the .gen folder
-                const generalGenDir = path.join(vscode.workspace.rootPath ?? ".", ".gen");
+            //     // TODO: Reproduce the path to the .gen folder
+            //     const generalGenDir = path.join(vscode.workspace.rootPath ?? ".", ".gen");
                 
-                if (!fs.existsSync(generalGenDir)) {
-                    fs.mkdirSync(generalGenDir, { recursive: true });
-                }
+            //     if (!fs.existsSync(generalGenDir)) {
+            //         fs.mkdirSync(generalGenDir, { recursive: true });
+            //     }
 
-                const genDir = path.join(generalGenDir, path.dirname(relativePath));
+            //     const genDir = path.join(generalGenDir, path.dirname(relativePath));
 
-                const genPath = path.join(genDir, path.basename(tmpPath));
+            //     const genPath = path.join(genDir, path.basename(tmpPath));
 
-                console.log(`[proto3b] Generated path: ${genPath}`);
+            //     console.log(`[proto3b] Generated path: ${genPath}`);
                 
-                if (!fs.existsSync(genDir)) {
-                    fs.mkdirSync(genDir, {recursive: true});
-                }
+            //     if (!fs.existsSync(genDir)) {
+            //         fs.mkdirSync(genDir, {recursive: true});
+            //     }
                 
-                const protoText = fs.readFileSync(fullPath, "utf8");
-                const { content: transformed, lineMap } = transformProto3bToProto3(protoText, relativePath);
+            //     const protoText = fs.readFileSync(fullPath, "utf8");
+            //     const { content: transformed, lineMap } = transformProto3bToProto3(protoText, relativePath);
 
-                fs.writeFileSync(genPath, transformed);
+            //     fs.writeFileSync(genPath, transformed);
 
-                lineMapsByFile[genPath] = lineMap;
+            //     lineMapsByFile[genPath] = lineMap;
 
-                return path.relative(workspaceRoot, genPath);
-                } catch (e) {
-                    console.error("Error transforming proto3b to proto3:", e);
-                    vscode.window.showErrorMessage("Error transforming proto3b to proto3: " + e.message);
-                }
+            //     return path.relative(workspaceRoot, genPath);
+            //     } catch (e) {
+            //         console.error("Error transforming proto3b to proto3:", e);
+            //         vscode.window.showErrorMessage("Error transforming proto3b to proto3: " + e.message);
+            //     }
                 
-            }
+            // }
             return arg;
         });
 
